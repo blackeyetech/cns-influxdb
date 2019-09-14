@@ -16,9 +16,9 @@ let db = new CNInfluxDB({
       time: Date.now(),
     },
   ]);
-  let res = await db.query({ q: "SELECT * FROM test3", get: true });
+  // let res = await db.query({ q: "SELECT * FROM test3", get: true });
 
-  console.log("%j", res.data);
+  // console.log("%j", res.data);
 
   await db.query({ q: "CREATE DATABASE newdb", get: false });
 })();
