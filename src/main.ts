@@ -5,10 +5,22 @@ import querystring from "querystring";
 
 // Interfaces here
 interface DBOptions {
-  db: string;
   influxUrl: string;
   username?: string;
   password?: string;
+}
+
+interface Point {
+  values: { [name: string]: string | number | boolean };
+  tags: { [name: string]: string };
+  time?: number;
+}
+
+interface InsertOptions {
+  db: string;
+  measurement: string;
+  points: Point[];
+  rp?: string;
 }
 
 interface InsertParameters {
@@ -19,6 +31,7 @@ interface InsertParameters {
 }
 
 interface QueryOptions {
+  db: string;
   q: string;
   get: boolean;
   epoch?: string;
@@ -41,26 +54,20 @@ const PING_INFLUX_DB = "ping";
 const WRITE_INFLUX_DB = "write";
 const QUERY_INFLUX_DB = "query";
 
-interface Point {
-  values: { [name: string]: string | number | boolean };
-  tags: { [name: string]: string };
-  time?: number;
-}
-
 // Class CNInfluxDB here
 class CNInfluxDB extends CNShell {
   // Properties here
-  private _db: string;
   private _influxUrl: string;
   private _username?: string;
   private _password?: string;
 
-  // Constructor here
-  constructor(options: DBOptions) {
-    // Make the name of the db the name
-    super(options.db);
+  // private _dbList: string[];
 
-    this._db = options.db;
+  // Constructor here
+  constructor(name: string, options: DBOptions) {
+    // Make the name of the db the name
+    super(name);
+
     this._influxUrl = options.influxUrl;
     this._username = options.username;
     this._password = options.password;
@@ -106,23 +113,23 @@ class CNInfluxDB extends CNShell {
     return status;
   }
 
-  async insert(measurement: string, points: Point[], rp?: string) {
-    let params: InsertParameters = { db: this._db };
+  async insert(opts: InsertOptions) {
+    let params: InsertParameters = { db: opts.db };
     if (this._username !== undefined && this._password !== undefined) {
       params.u = this._username;
       params.p = this._password;
     }
-    if (rp !== undefined) {
-      params.rp = rp;
+    if (opts.rp !== undefined) {
+      params.rp = opts.rp;
     }
 
     let qs = querystring.stringify(<any>params);
     let data = "";
 
-    for (let i in points) {
-      let point = points[i];
+    for (let i in opts.points) {
+      let point = opts.points[i];
 
-      data += measurement;
+      data += opts.measurement;
       if (point.tags !== undefined) {
         for (let tag in point.tags) {
           data += `,${tag}=${point.tags[tag]}`;
@@ -173,7 +180,7 @@ class CNInfluxDB extends CNShell {
   }
 
   async query(opts: QueryOptions) {
-    let params: QueryParameters = { db: this._db };
+    let params: QueryParameters = { db: opts.db };
     if (this._username !== undefined && this._password !== undefined) {
       params.u = this._username;
       params.p = this._password;
