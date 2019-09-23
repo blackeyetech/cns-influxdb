@@ -18,7 +18,7 @@ let db = new CNInfluxDB("test", {
       },
     ],
   });
-  let res = await db.query({ db: "newdb", q: "SELECT * FROM temp", get: true });
+  // let res = await db.query({ db: "newdb", q: "SELECT * FROM temp", get: true });
 
-  console.log("%j", res.data);
+  // console.log("%j", res.data);
 })();
