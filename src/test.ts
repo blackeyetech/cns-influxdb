@@ -6,9 +6,9 @@ let db = new CNInfluxDB("test", {
 
 (async () => {
   await db.init();
-  await db.query({ db: "test", q: "CREATE DATABASE newdb", get: false });
+  await db.query({ db: "", q: "CREATE DATABASE newerdb", get: false });
   await db.insert({
-    db: "newdb",
+    db: "newerdb",
     measurement: "temp",
     points: [
       {

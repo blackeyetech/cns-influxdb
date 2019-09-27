@@ -18,6 +18,7 @@ interface Point {
 
 interface InsertOptions {
   db: string;
+  precision?: string;
   measurement: string;
   points: Point[];
   rp?: string;
@@ -25,6 +26,7 @@ interface InsertOptions {
 
 interface InsertParameters {
   db: string;
+  precision: string;
   u?: string;
   p?: string;
   rp?: string;
@@ -114,13 +116,16 @@ class CNInfluxDB extends CNShell {
   }
 
   async insert(opts: InsertOptions) {
-    let params: InsertParameters = { db: opts.db };
+    let params: InsertParameters = { db: opts.db, precision: "ms" };
     if (this._username !== undefined && this._password !== undefined) {
       params.u = this._username;
       params.p = this._password;
     }
     if (opts.rp !== undefined) {
       params.rp = opts.rp;
+    }
+    if (opts.precision !== undefined) {
+      params.precision = opts.precision;
     }
 
     let qs = querystring.stringify(<any>params);
