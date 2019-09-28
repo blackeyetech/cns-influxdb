@@ -57,7 +57,7 @@ const WRITE_INFLUX_DB = "write";
 const QUERY_INFLUX_DB = "query";
 
 // Class CNInfluxDB here
-class CNInfluxDB extends CNShell {
+export default class CNInfluxDB extends CNShell {
   // Properties here
   private _influxUrl: string;
   private _username?: string;
@@ -225,5 +225,3 @@ class CNInfluxDB extends CNShell {
     return results;
   }
 }
-
-export { CNInfluxDB };

@@ -1,4 +1,4 @@
-import { CNInfluxDB } from "./main";
+import CNInfluxDB from "./main";
 
 let db = new CNInfluxDB("test", {
   influxUrl: "http://localhost:8086",
