@@ -1,6 +1,6 @@
 // imports here
 import CNShell from "cn-shell";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import querystring from "querystring";
 
 // Interfaces here
