@@ -1,5 +1,5 @@
 {
-  "version": "1.2.2",
+  "version": "1.2.3",
   "name": "@cn-shell/influxdb",
   "description": "A Cloud Native Shell extension for InfluxDB",
   "main": "./dist/main.js",
