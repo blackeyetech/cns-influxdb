@@ -1,6 +1,6 @@
 // imports here
 import CNShell from "cn-shell";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import querystring from "querystring";
 
 // Interfaces here
@@ -115,7 +115,7 @@ export default class CNInfluxDB extends CNShell {
     return status;
   }
 
-  async insert(opts: InsertOptions) {
+  async insert(opts: InsertOptions): Promise<void> {
     let params: InsertParameters = { db: opts.db, precision: "ms" };
     if (this._username !== undefined && this._password !== undefined) {
       params.u = this._username;
@@ -184,7 +184,7 @@ export default class CNInfluxDB extends CNShell {
     });
   }
 
-  async query(opts: QueryOptions) {
+  async query(opts: QueryOptions): Promise<any | void> {
     let params: QueryParameters = { db: opts.db };
     if (this._username !== undefined && this._password !== undefined) {
       params.u = this._username;
@@ -222,6 +222,10 @@ export default class CNInfluxDB extends CNShell {
       this.error("Query Error: %s", e);
     });
 
-    return results;
+    if (results === undefined) {
+      return;
+    }
+
+    return results.data;
   }
 }
