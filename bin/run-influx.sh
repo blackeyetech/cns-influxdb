@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker container exec -it influxdb influx -precision rfc3339
+docker container exec -it influxdb influx -precision rfc3339 $@

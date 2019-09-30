@@ -8,4 +8,4 @@ then
   exit 1
 fi
 
-docker run -p 8086:8086 --rm --name influxdb -v $DB_DIR:/var/lib/influxdb influxdb
+docker run -p 8086:8086 --rm --name influxdb -v /tmp:/tmp -v $DB_DIR:/var/lib/influxdb influxdb

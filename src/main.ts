@@ -4,19 +4,19 @@ import axios from "axios";
 import querystring from "querystring";
 
 // Interfaces here
-interface DBOptions {
+export interface DBOptions {
   influxUrl: string;
   username?: string;
   password?: string;
 }
 
-interface Point {
+export interface Point {
   values: { [name: string]: string | number | boolean };
   tags: { [name: string]: string };
   time?: number;
 }
 
-interface InsertOptions {
+export interface InsertOptions {
   db: string;
   precision?: string;
   measurement: string;
@@ -24,7 +24,7 @@ interface InsertOptions {
   rp?: string;
 }
 
-interface InsertParameters {
+export interface InsertParameters {
   db: string;
   precision: string;
   u?: string;
@@ -32,7 +32,7 @@ interface InsertParameters {
   rp?: string;
 }
 
-interface QueryOptions {
+export interface QueryOptions {
   db: string;
   q: string;
   get: boolean;
@@ -41,7 +41,7 @@ interface QueryOptions {
   pretty?: boolean;
 }
 
-interface QueryParameters {
+export interface QueryParameters {
   db: string;
   q?: string;
   epoch?: string;
