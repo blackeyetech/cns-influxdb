@@ -36,6 +36,7 @@ export interface QueryOptions {
   db: string;
   q: string;
   get: boolean;
+  precision?: string;
   epoch?: string;
   chunked?: boolean;
   pretty?: boolean;
@@ -43,6 +44,7 @@ export interface QueryOptions {
 
 export interface QueryParameters {
   db: string;
+  precision: string;
   q?: string;
   epoch?: string;
   chunked?: boolean;
@@ -185,10 +187,13 @@ export default class CNInfluxDB extends CNShell {
   }
 
   async query(opts: QueryOptions): Promise<any | void> {
-    let params: QueryParameters = { db: opts.db };
+    let params: QueryParameters = { db: opts.db, precision: "ms" };
     if (this._username !== undefined && this._password !== undefined) {
       params.u = this._username;
       params.p = this._password;
+    }
+    if (opts.precision !== undefined) {
+      params.precision = opts.precision;
     }
     if (opts.chunked !== undefined) {
       params.chunked = opts.chunked;
