@@ -175,12 +175,14 @@ export default class CNInfluxDB extends CNShell {
       }
     }
 
+    let url = `${this._influxUrl}/${WRITE_INFLUX_DB}?${qs}`;
+
     await axios({
-      url: `${this._influxUrl}/${WRITE_INFLUX_DB}?${qs}`,
+      url,
       method: "post",
       data,
     }).catch(e => {
-      this.error("Insert Error: %s", e);
+      this.error("Query Error: %s for url: %s and data: %j", e, url, data);
     });
   }
 
