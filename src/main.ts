@@ -209,17 +209,18 @@ export default class CNInfluxDB extends CNShell {
     }
 
     let qs = querystring.stringify(<any>params);
+    let url = `${this._influxUrl}/${QUERY_INFLUX_DB}?${qs}`;
 
     let results = await axios({
       headers: {
         "Content-Type": "application/x-www-form-urlencoded", // required to send query in POST body
         Accept: "application/json",
       },
-      url: `${this._influxUrl}/${QUERY_INFLUX_DB}?${qs}`,
+      url,
       method: opts.get ? "get" : "post",
       data,
     }).catch(e => {
-      this.error("Query Error: %s", e);
+      this.error("Query Error: %s for url: %s and data: %j", e, url, data);
     });
 
     if (results === undefined) {
