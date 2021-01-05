@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "@types/node": "^12.6.8",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "cn-shell": "^2.2.0"
   },
   "repository": {
